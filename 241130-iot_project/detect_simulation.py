@@ -1,12 +1,14 @@
 import os
 import cv2
 import time
+import safetensors.torch
 import yaml
 import torch
 import numpy as np
 from torch import nn
 import mediapipe as mp
 from controller import ModbusMaster
+import safetensors
 
 class HandLandmarksDetector():
     def __init__(self) -> None:
@@ -89,7 +91,7 @@ class LightGesture:
         self.status_text = None
         self.signs = label_dict_from_config_file("hand_gesture.yaml")
         self.classifier = NeuralNetwork()
-        self.classifier.load_state_dict(torch.load(model_path))
+        self.classifier.load_state_dict(safetensors.torch.load_model(model_path))
         self.classifier.eval()
 
         if self.device:
