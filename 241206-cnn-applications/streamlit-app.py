@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import streamlit as st
+import safetensors
 from PIL import Image
 import torchvision.transforms as transforms
 
@@ -34,7 +35,7 @@ class LeNetClassifier(nn.Module):
 @st.cache_resource
 def load_model(model_path, num_classes=10):
     lenet_model = LeNetClassifier(num_classes)
-    lenet_model.load_state_dict(torch.load(model_path, weights_only=True, map_location=torch.device('cpu')))
+    lenet_model.load_state_dict(safetensors.torch.load_model(model_path, weights_only=True, map_location=torch.device('cpu')))
     lenet_model.eval()
     return lenet_model
 model = load_model('./model/lenet_model.pt')

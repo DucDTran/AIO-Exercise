@@ -5,6 +5,7 @@ import torch.nn.functional as F
 import streamlit as st
 from PIL import Image
 import torchvision.transforms as transforms
+import safetensors
 
 idx2label = {
   0: 'cbb',
@@ -45,7 +46,7 @@ class LeNetClassifier(nn.Module):
 @st.cache_resource
 def load_model(model_path, num_classes=5):
     lenet_model = LeNetClassifier(num_classes)
-    lenet_model.load_state_dict(torch.load(model_path, weights_only=True, map_location=torch.device('cpu')))
+    lenet_model.load_state_dict(safetensors.torch.load_model(model_path, weights_only=True, map_location=torch.device('cpu')))
     lenet_model.eval()
     return lenet_model
 model = load_model('model/lenet_model.pt')
