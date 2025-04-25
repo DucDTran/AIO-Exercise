@@ -165,3 +165,5 @@ cython_debug/
 241206-cnn-applications/data
 241130-model-optimization/data
 241206-cnn-applications/content
+241207-cnn-applications-2/scenes_classification
+241207-cnn-applications-2/weather-dataset/dataset
