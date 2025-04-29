@@ -9,6 +9,7 @@ from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 import unidecode
 import re
+import safetensors
 
 class SentimentClassifier(nn.Module):
     def __init__(
@@ -64,7 +65,7 @@ model = SentimentClassifier(
     dropout_prob=0.2
 )
 
-model.load_state_dict(torch.load('financial_model_weights.pt', map_location=device))
+model.load_state_dict(safetensors.torch.load_model('financial_model_weights.pt', map_location=device))
 model.eval()  # Set to evaluation mode
 model.dropout.train(False)  # Explicitly disable dropout
 
