@@ -3,6 +3,7 @@ import torch.nn as nn
 import streamlit as st
 import numpy as np
 import pandas as pd
+import safetensors
 
 class WeatherForecastor(nn.Module):
     def __init__(self, embedding_dim, hidden_size, n_layers, dropout_prob):
@@ -36,7 +37,7 @@ model = WeatherForecastor(
     n_layers=n_layers,
     dropout_prob=dropout_prob
 ).to(device)
-model.load_state_dict(torch.load('model.pth', map_location=torch.device('cpu')))
+model.load_state_dict(safetensors.torch.load_model('model.pth', map_location=torch.device('cpu')))
 model.eval()
 
 # Streamlit app
